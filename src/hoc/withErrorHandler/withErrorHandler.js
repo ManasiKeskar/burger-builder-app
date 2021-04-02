@@ -5,9 +5,9 @@ import Aux from '../Auxiliary/Auxiliary';
 
 const withErrorHandler = (WrappedComponent, axios) => {
     return class extends Component {
-        // state = {
-        //     error: null
-        // }
+        state = {
+            error: null
+        }
 
         // componentDidMount () {
         //     // super(props);
@@ -23,22 +23,29 @@ const withErrorHandler = (WrappedComponent, axios) => {
 
         // _isMounted = false;
 
-        constructor (props) {
-            super(props);
-            this.state = {
-                error : null
-            }
-        }
+        // constructor (props) {
+        //     super(props);
+        //     this.state = {
+        //         error : null
+        //     }
+        //     // axios.interceptors.request.use(req => {
+        //     //     this.setState({error: null});
+        //     //     return req;
+        //     // });
+        //     // axios.interceptors.response.use(res => res, error => {
+        //     //     this.setState({error: error});
+        //     // });
+        // }
 
-        componentDidMount() {
-            this.reqInterceptor = axios.interceptors.request.use(req => {
-                this.setState({error: null});
-                return req;
-            });
-            this.resInterceptor = axios.interceptors.response.use(res => res, error => {
-                this.setState({error: error});
-            });
-        }
+        // componentDidMount() {
+        //     this.reqInterceptor = axios.interceptors.request.use(req => {
+        //         this.setState({error: null});
+        //         return req;
+        //     });
+        //     this.resInterceptor = axios.interceptors.response.use(res => res, error => {
+        //         this.setState({error: error});
+        //     });
+        // }
 
         componentWillUnmount() {
             // console.log('Will Unmount', this.reqInterceptor, this.resInterceptor);
@@ -47,15 +54,15 @@ const withErrorHandler = (WrappedComponent, axios) => {
         }
 
 
-        // componentWillMount () {
-        //     axios.interceptors.request.use(req => {
-        //         this.setState({error: null});
-        //         return req;
-        //     })
-        //     axios.interceptors.response.use(res => res, error => {
-        //         this.setState({error: error});
-        //     })
-        // }
+        componentWillMount () {
+            axios.interceptors.request.use(req => {
+                this.setState({error: null});
+                return req;
+            })
+            axios.interceptors.response.use(res => res, error => {
+                this.setState({error: error});
+            })
+        }
 
         errorConfirmedHandler = () => {
             this.setState({error: null});
