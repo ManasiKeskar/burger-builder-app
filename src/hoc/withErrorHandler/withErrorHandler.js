@@ -5,9 +5,14 @@ import Aux from '../Auxiliary/Auxiliary';
 
 const withErrorHandler = (WrappedComponent, axios) => {
     return class extends Component {
+
         state = {
             error: null
-        }
+        };
+
+        dismissErrorHandler = () => {
+            this.setState({ error : null });
+        };
 
         // componentDidMount () {
         //     // super(props);
@@ -47,33 +52,40 @@ const withErrorHandler = (WrappedComponent, axios) => {
         //     });
         // }
 
-        componentWillUnmount() {
-            // console.log('Will Unmount', this.reqInterceptor, this.resInterceptor);
-            axios.interceptors.request.eject(this.reqInterceptor);
-            axios.interceptors.response.eject(this.resInterceptor);
-        }
+        // componentWillUnmount() {
+        //     // console.log('Will Unmount', this.reqInterceptor, this.resInterceptor);
+        //     axios.interceptors.request.eject(this.reqInterceptor);
+        //     axios.interceptors.response.eject(this.resInterceptor);
+        // }
 
 
-        componentWillMount () {
+        // componentWillMount () {
+        //     axios.interceptors.request.use(req => {
+        //         this.setState({error: null});
+        //         return req;
+        //     })
+        //     axios.interceptors.response.use(res => res, error => {
+        //         this.setState({error: error});
+        //     })
+        // }
+
+        // errorConfirmedHandler = () => {
+        //     this.setState({error: null});
+        // }
+
+        render () {
             axios.interceptors.request.use(req => {
                 this.setState({error: null});
                 return req;
-            })
+            });
             axios.interceptors.response.use(res => res, error => {
                 this.setState({error: error});
-            })
-        }
-
-        errorConfirmedHandler = () => {
-            this.setState({error: null});
-        }
-
-        render () {
+            });
             return (
                 <Aux>
                     <Modal 
                         show={this.state.error}
-                        modalClosed={this.errorConfirmedHandler}
+                        modalClosed={this.dismissErrorHandler}
                     >
                         {this.state.error ? this.state.error.message : null}
                     </Modal>
