@@ -1,3 +1,6 @@
+The project has been deployed on 
+https://fir-burger-builder-8bf5f.web.app/
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
